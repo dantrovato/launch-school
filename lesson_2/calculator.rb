@@ -3,7 +3,8 @@ def prompt(message)
 end
 
 def valid_number?(number)
-  number.to_i > 0
+  integer?(number)
+  number?(number)
 end
 
 def operation_to_message(operator)
@@ -17,6 +18,17 @@ def operation_to_message(operator)
   when '4'
     'dividing'.capitalize
   end
+end
+
+def number?(input)
+  integer?(input) || float?(input)
+end
+
+def integer?(input)
+  input.to_i.to_s == input
+end
+def float?(input)
+  input.to_f.to_s == input
 end
 
 prompt('Welcome to Calculator! Enter your name:')
