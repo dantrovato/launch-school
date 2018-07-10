@@ -10,13 +10,13 @@ end
 def operation_to_message(operator)
   case operator
   when '1'
-    'adding'.capitalize
+    puts 'adding'.capitalize
   when '2'
-    'subtracting'.capitalize
+    puts 'subtracting'.capitalize
   when '3'
-    'multiplying'.capitalize
+    puts 'multiplying'.capitalize
   when '4'
-    'dividing'.capitalize
+    puts 'dividing'.capitalize
   end
 end
 
