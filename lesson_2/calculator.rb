@@ -1,3 +1,6 @@
+require 'yaml'
+MESSAGES = YAML.load_file('calculator_messages.yml')
+
 def prompt(message)
   Kernel.puts("=> #{message}")
 end
@@ -31,7 +34,7 @@ def float?(input)
   input.to_f.to_s == input
 end
 
-prompt('Welcome to Calculator! Enter your name:')
+prompt(MESSAGES['es']['welcome'])
 number1 = ''
 number2 = ''
 on = true

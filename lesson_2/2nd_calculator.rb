@@ -1,30 +1,67 @@
+require 'yaml'
+MESSAGES = YAML.load_file('2nd_calculator_messages.yml')
+
 def prompt(message)
   puts "=> #{message} <="
 end
 
-first_number = ''
-second_number = ''
+def valid_number(number)
+  integer?(number)
+  number?(number)
+end
+
+def operation_to_message(operation)
+  word =case operation
+  when '1'
+    'plus'
+  when '2'
+    'minus'
+  when '3'
+    'times'
+  when '4'
+    'divided by'
+  else
+    prompt MESSAGES['valid']
+  end
+  x = 'gibberish code'
+  word
+end
+
+def integer?(input)
+  input.to_i.to_s == input && input.to_i > 0
+end
+
+def float?(input)
+  input.to_f.to_s
+end
+
+def number?(input)
+  integer?(input) || float?(input)
+end
+
+number1 = ''
+number2 = ''
 
 loop do
   # FIRST NUMBER
-  prompt "Enter first number"
+  prompt MESSAGES['fr']['enter_first']
   loop do
-    first_number = gets.chomp
-    if first_number.to_i.to_s == first_number && first_number.to_i > 0
+    number1 = gets.chomp
+    if valid_number(number1)
       break
     else
-      prompt "Enter valid number"
+      prompt MESSAGES['fr']['valid']
     end
   end
 
   # SECOND NUMBER
-  prompt "Enter second number"
+  prompt MESSAGES['fr']['enter_second']
   loop do
-    second_number = gets.chomp
-    if second_number.to_i.to_s == second_number && second_number.to_i > 0
+    number2 = gets.chomp
+    if valid_number(number2)
       break
     else
-      prompt "Enter valid number"
+      prompt MESSAGES['valid']
     end
   end
 
@@ -38,35 +75,30 @@ loop do
   FAVA
   puts operator_prompt
   loop do
-   calculation = gets.chomp
-   operation = ''
-   result = case calculation
-   when '1'
-     operation = 'plus'
-     first_number.to_i + second_number.to_i
+    calculation = gets.chomp
 
-   when '2'
-     operation = 'minus'
-     first_number.to_i - second_number.to_i
 
-   when '3'
-     operation = 'times'
-     first_number.to_i * second_number.to_i
-
-   when '4'
-     operation = 'divided by'
-     first_number.to_f / second_number.to_f
-
-   else
-     prompt "Enter valid number"
-   end
-   prompt "The result of #{first_number} #{operation} #{second_number} is #{result}"
-   break
+    if %(1 2 3 4).include?(calculation)
+      result = case calculation
+      when '1'
+        number1.to_i + number2.to_i
+      when '2'
+        number1.to_i - number2.to_i
+      when '3'
+        number1.to_i * number2.to_i
+      when '4'
+        number1.to_f / number2.to_f
+      end
+      prompt "The result of #{number1} #{operation_to_message(calculation)} #{number2} is #{result}"
+      break
+    else
+     prompt "Choose a valid command: 1 - 4"
+    end
   end
 
-  prompt "Do you want to go again? Yes or no?"
+  prompt "Enter 'yes' to start again. Otherwise good bye for now"
   start_again = gets.chomp
-  break if start_again == 'no'.downcase
+  break unless start_again.downcase.start_with?('y')
 end
 
 prompt "Thank you and Allah bless you\n !"
