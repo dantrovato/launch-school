@@ -3,14 +3,15 @@ def prompt(message)
 end
 
 def display_results(player, computer)
-  if player == 'rock' && computer == 'paper' ||
-    player == 'paper' && computer == 'scissors' ||
-    player == 'scissors' && computer == 'rock'
-    prompt('ha! you lose. computer says \'mwahahaha\'')
-  elsif player == 'rock' && computer == 'scissors' ||
+  if  player == 'rock' && computer == 'scissors' ||
     player == 'paper' && computer == 'rock' ||
-    player == 'scissors' && computer == 'rock'
+    player == 'scissors' && computer == 'paper'
     prompt('orite then. you win this time. i\'ll see you in hell')
+  elsif
+    player == 'rock' && computer == 'paper' ||
+      player == 'paper' && computer == 'scissors' ||
+      player == 'scissors' && computer == 'rock'
+      prompt('ha! you lose. computer says \'mwahahaha\'')
   else
     prompt('ooooh... we got a draw!')
   end
