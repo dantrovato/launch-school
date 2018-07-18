@@ -1,13 +1,19 @@
+scores = {
+  player: 0,
+  computer: 0
+}
+
+choices = <<-CHOICES
+choices:
+       r for rock
+       p for paper
+       sc for scissors
+       l for lizard
+       sp for spock
+CHOICES
+
 def prompt(message)
   puts "=> #{message}"
-end
-
-def win?(first, second)
-  (first == 'rock') && (second == 'scissors' || second == 'lizard')  ||
-  (first == 'paper') && (second == 'rock' || second == 'spock') ||
-  (first == 'scissors') && (second == 'paper' || second == 'lizard') ||
-  (first == 'spock') && (second == 'rock' || second == 'scissors') ||
-  (first == 'lizard') && (second == 'spock' || second == 'paper')
 end
 
 def display_results(player, computer)
@@ -20,18 +26,32 @@ def display_results(player, computer)
   end
 end
 
+def win?(first, second)
+  (first == 'rock') && (second == 'scissors' || second == 'lizard')  ||
+  (first == 'paper') && (second == 'rock' || second == 'spock') ||
+  (first == 'scissors') && (second == 'paper' || second == 'lizard') ||
+  (first == 'spock') && (second == 'rock' || second == 'scissors') ||
+  (first == 'lizard') && (second == 'spock' || second == 'paper')
+end
+
+def update_score(player, computer, scores)
+  if win?(player, computer)
+    scores[:player] += 1
+  elsif win?(computer, player)
+    scores[:computer] += 1
+  else
+    prompt('this happens')
+  end
+  scores
+end
+
+def print_score(scores)
+  puts scores
+end
+
 def valid?(choice)
   %W(rock paper scissors lizard spock).include?(choice)
 end
-
-choices = <<-CHOICES
-choices:
-       r for rock
-       p for paper
-       sc for scissors
-       l for lizard
-       sp for spock
-CHOICES
 
 loop do
   prompt("Enter your weapon of choice: ")
@@ -67,8 +87,10 @@ loop do
   prompt("Computer chose #{computer_choice}")
 
   display_results(player_choice, computer_choice)
-
+  update_score(player_choice, computer_choice, scores)
+  print_score(scores)
+  break if scores[:player] == 5 || scores[:computer] == 5
   prompt('play again? enter yes or no')
   play_again = gets.chomp.downcase
-  break if play_again == 'no'
+
 end
