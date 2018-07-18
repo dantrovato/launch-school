@@ -3,9 +3,11 @@ def prompt(message)
 end
 
 def win?(first, second)
-  first == 'rock' && second == 'scissors' ||
-  first == 'paper' && second == 'rock' ||
-  first == 'scissors' && second == 'paper'
+  (first == 'rock') && (second == 'scissors' || second == 'lizard')  ||
+  (first == 'paper') && (second == 'rock' || second == 'spock') ||
+  (first == 'scissors') && (second == 'paper' || second == 'lizard') ||
+  (first == 'spock') && (second == 'rock' || second == 'scissors') ||
+  (first == 'lizard') && (second == 'spock' || second == 'paper')
 end
 
 def display_results(player, computer)
@@ -19,7 +21,7 @@ def display_results(player, computer)
 end
 
 def valid?(choice)
-  %W(rock paper scissors).include?(choice)
+  %W(rock paper scissors lizard spock).include?(choice)
 end
 
 loop do
@@ -28,6 +30,8 @@ loop do
          rock
          paper
          scissors
+         lizard
+         spock
   CHOICES
 
   prompt("Enter your weapon of choice: ")
@@ -45,7 +49,7 @@ loop do
   prompt("You chose #{player_choice}")
 
   # select computer choices
-  computer_choice = %w(rock paper scissors).sample
+  computer_choice = %w(rock paper scissors lizard spock).sample
   prompt("Computer chose #{computer_choice}")
 
   display_results(player_choice, computer_choice)
