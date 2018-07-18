@@ -24,22 +24,36 @@ def valid?(choice)
   %W(rock paper scissors lizard spock).include?(choice)
 end
 
-loop do
-  choices = <<-CHOICES
-  choices:
-         rock
-         paper
-         scissors
-         lizard
-         spock
-  CHOICES
+choices = <<-CHOICES
+choices:
+       r for rock
+       p for paper
+       sc for scissors
+       l for lizard
+       sp for spock
+CHOICES
 
+loop do
   prompt("Enter your weapon of choice: ")
   prompt(choices)
   player_choice = ''
+
   loop do
     # get player's choice
     player_choice = gets.chomp.downcase
+
+    case player_choice
+    when 'r'
+      player_choice = 'rock'
+    when 'p'
+      player_choice = 'paper'
+    when 'sc'
+      player_choice = 'scissors'
+    when 'l'
+      player_choice = 'lizard'
+    when 'sp'
+      player_choice = 'spock'
+    end
 
     # valid choice?
     break if valid?(player_choice)
