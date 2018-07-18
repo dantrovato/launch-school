@@ -27,7 +27,7 @@ def display_results(player, computer)
 end
 
 def win?(first, second)
-  (first == 'rock') && (second == 'scissors' || second == 'lizard')  ||
+  (first == 'rock') && (second == 'scissors' || second == 'lizard') ||
   (first == 'paper') && (second == 'rock' || second == 'spock') ||
   (first == 'scissors') && (second == 'paper' || second == 'lizard') ||
   (first == 'spock') && (second == 'rock' || second == 'scissors') ||
@@ -50,7 +50,7 @@ def print_score(scores)
 end
 
 def valid?(choice)
-  %W(rock paper scissors lizard spock).include?(choice)
+  %w(rock paper scissors lizard spock).include?(choice)
 end
 
 loop do
@@ -91,6 +91,4 @@ loop do
   print_score(scores)
   break if scores[:player] == 5 || scores[:computer] == 5
   prompt('play again? enter yes or no')
-  play_again = gets.chomp.downcase
-
 end
