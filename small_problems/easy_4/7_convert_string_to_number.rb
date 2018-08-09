@@ -11,15 +11,30 @@
 # string_to_integer('4321') == 4321
 # string_to_integer('570') == 570
 
+
+
+
+DIGITS = {
+  '0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4,
+  '5' => 5, '6' => 6, '7' => 7, '8' => 8, '9' => 9
+}
+
+def string_to_integer(str)
+  digit_arr = str.chars.map { |chr| DIGITS[chr] }
+  value = 0
+  digit_arr.each do |num|
+    value = 10 * value + num
+  end
+  value
+end
 =begin
 # CESI'S SOLUSH
 def string_to_integer(str)
   p eval(str)
 
 end
-=end
 
-=begin
+puts "2============================="
 # MY SOLUSH
 def string_to_integer(str)
   #str = str.split('')
@@ -52,20 +67,29 @@ def string_to_integer(str)
   end
 
 end
-
 =end
 
+
+=begin
 # ACTUAL SOLUSH
 
-def string_to_integer(int)
-  x = 0
-  array = int.split('')
-  array.each.with_index do |y, i|
-    x = (x + (y.hex))
-    x = x * 10 unless i == array.length-1
-  end
-  return x
-end
+DIGITS = {
+  '0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4,
+  '5' => 5, '6' => 6, '7' => 7, '8' => 8, '9' => 9
+}
 
+def string_to_integer(str)
+  # string = DIGITS value
+  digit_arr = str.chars.map do |chr|
+    DIGITS[chr]
+  end
+  value = 0
+  digit_arr.each do |chr|
+    value = 10 * value + chr
+  end
+  value
+end
+=end
+string_to_integer('99')
 p string_to_integer('4321') == 4321
 p string_to_integer('570') == 570

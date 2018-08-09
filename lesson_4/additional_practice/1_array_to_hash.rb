@@ -5,8 +5,8 @@
 
 flintstones = ["Fred", "Barney", "Wilma", "Betty", "Pebbles", "BamBam"]
 
-
 # my solush 1:
+
 counter = 0
 
 john = flintstones.each_with_object({}) do |item, hash|
@@ -14,13 +14,23 @@ john = flintstones.each_with_object({}) do |item, hash|
   counter += 1
 end
 
-john
+p john
 
 # --------------------
 # solush 2:
+
+dave = flintstones.each_with_object({}) do |item, hash|
+  hash[item] = flintstones.index(item)
+end
+
+p dave
+
+# --------------------
+# solush 3:
+
 hash = {}
 
-dave = flintstones.each_with_index do |item, index|
+flintstones.each_with_index do |item, index|
   hash[item] = index
  end
 
