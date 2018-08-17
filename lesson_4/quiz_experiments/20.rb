@@ -53,10 +53,6 @@ puts "============================"
 p usable_leads
 
 puts '============================ LAST'
-mailing_campaign_leads.each do |lead|
-  # lead[:name] => "Emma Lopez"
-  p names = lead[:name].split # => ["Emma", "Lopez"]
-  p lead[:name] #= names.map { |name| name.capitalize }.join(' ')
-end
+
 
 # The team comes up with four options to replace the legacy code, which you then discuss during a code review. Select all the options which replicate the functionality of the legacy code.
