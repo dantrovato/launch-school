@@ -1,11 +1,8 @@
-numbers = ['2', '3', '5', '7', '8', '11', '13', '15', '18']
-odd_numbers = []
-number = 0
+# Add up all of the ages from the Munster family hash:
 
-until number == numbers.size
-  odd_numbers << numbers[number] if number.to_i.odd?
+ages = { "Herman" => 32, "Lily" => 30, "Grandpa" => 5843, "Eddie" => 10, "Marilyn" => 22, "Spot" => 237 }
 
-  number += 1
-end
+p ages.values.sum
 
-p odd_numbers
+p ages.values.inject(:+)
+p ages.values.reduce(:+) 
