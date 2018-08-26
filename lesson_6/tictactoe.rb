@@ -17,9 +17,34 @@ def print_board
   p BOARD[2]
 end
 
+# here i want to select the numbers in the AVAILABLE_SLOTS array and
+# put them into a computer_options variable so that the computer can pic an empty sloo
 def computer_turn
+  computer_options = AVAILABLE_SLOTS.select do |index|
+    index != nil
+  end
+  #p computer_options.sample
+  case p computer_options.sample
+  when 0
+    BOARD[0][0] = 'o'
+  when 1
+    BOARD[0][1] = 'o'
+  when 2
+    BOARD[0][2] = 'o'
+  when 3
+    BOARD[1][0] = 'o'
+  when 4
+    BOARD[1][1] = 'o'
+  when 5
+    BOARD[1][2] = 'o'
+  when 6
+    BOARD[2][0] = 'o'
+  when 7
+    BOARD[2][1] = 'o'
+  when 8
+    BOARD[2][2] = 'o'
+  end
 
-  
   print_board()
 end
 
