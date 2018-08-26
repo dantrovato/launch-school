@@ -1,3 +1,22 @@
+# ex 7
+array = [[13, 43, 23], [11, 43, 65], [3, 55], [3, 54, 11]]
+p array.sort
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ex 8
 arr = [['1', '8', '11'], ['2', '6', '13'], ['2', '12', '15'], ['1', '8', '9']]
 john = arr.sort_by do |sub_arr|
@@ -6,7 +25,7 @@ john = arr.sort_by do |sub_arr|
   end
 end
 
-p john
+john
 
 puts '================='
 

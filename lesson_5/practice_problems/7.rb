@@ -8,7 +8,7 @@ arr[0] += 2
 arr[1][0] -= a
 
 
-# SOLUSH
+# SLUSH
 
 # a # => 2
 # b # => [3, 8]

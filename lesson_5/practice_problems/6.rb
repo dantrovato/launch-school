@@ -13,6 +13,13 @@ munsters = {
 
 # (Name) is a (age)-year-old (male or female).
 
+# MY SLUSH
+munsters.each do |key, value|
+  puts "#{key} is a #{value['age']}-year-old #{value['gender']}"
+end
+
+# ACTUAL SLUSH
+
 munsters.each_pair do |k, v|
   puts "#{k} is a #{v["age"]}-year-old #{v["gender"]}."
 end

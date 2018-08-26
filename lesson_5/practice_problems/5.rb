@@ -8,14 +8,26 @@ munsters = {
   "Marilyn" => { "age" => 23, "gender" => "female"}
 }
 # figure out the total age of just the male members of the family.
+
+# MY SLUSH
+
 total = []
 
-
-munsters.each do |k, v|
-  if v["gender"] == "male"
-    total << v["age"]
+munsters.each do |key, value|
+  if value["gender"] == "male"
+    total << value["age"]
   end
+
 end
 
-p "the first solution is #{total.sum}"
-p '========================='
+p total.sum
+
+# ACTUAL SLUSH
+
+totalz = 0
+
+munsters.each_value do |val|
+  totalz += val['age'] if val['gender'] == 'male'
+end
+
+p totalz

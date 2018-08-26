@@ -7,7 +7,10 @@ books = [
   {title: 'Ulysses', author: 'James Joyce', published: '1922'}
 ]
 
-john = books.sort_by do |hash|
-  hash[:published]
+# MY SLUSH
+
+sorted_arr = books.sort_by do |book|
+  book[:published]
 end
-p john
+
+p sorted_arr
