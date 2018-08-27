@@ -18,6 +18,8 @@ def print_board
   p BOARD[2]
 end
 
+
+
 # here i want to select the numbers in the AVAILABLE_SLOTS array and
 # put them into a computer_options variable so that the computer can pic an empty sloo
 def computer_turn
@@ -62,7 +64,15 @@ print_board()
 
 # get user input
 while game_on
-  if (BOARD[0][1] == 'x' && BOARD[0][1] == 'x' && BOARD[0][2] == 'x') || (BOARD[0][0] == 'x' && BOARD[1][4] == 'x' && BOARD[2][7] == 'x')
+  if (BOARD[0][0] == 'x' && BOARD[0][1] == 'x' && BOARD[0][2] == 'x') || # row 1
+    (BOARD[1][0] == 'x' && BOARD[1][1] == 'x' && BOARD[1][2] == 'x') || # row 2
+    (BOARD[2][0] == 'x' && BOARD[2][1] == 'x' && BOARD[2][2] == 'x') || # row 3
+    (BOARD[0][0] == 'x' && BOARD[1][0] == 'x' && BOARD[2][0] == 'x') || # column 1
+    (BOARD[0][1] == 'x' && BOARD[1][1] == 'x' && BOARD[2][1] == 'x') || # column 2
+    (BOARD[0][2] == 'x' && BOARD[1][2] == 'x' && BOARD[2][2] == 'x') || # column 3
+    (BOARD[0][0] == 'x' && BOARD[1][1] == 'x' && BOARD[2][2] == 'x') || # top left to bottom right
+    (BOARD[2][0] == 'x' && BOARD[1][1] == 'x' && BOARD[0][2] == 'x') # bottom left to top right
+
     puts "Player wins"
     break
   end
@@ -122,5 +132,15 @@ while game_on
 
   puts "Computer's turn..."
   computer_turn()
-
+  if (BOARD[0][0] == 'o' && BOARD[0][1] == 'o' && BOARD[0][2] == 'o') || # row 1
+    (BOARD[1][0] == 'o' && BOARD[1][1] == 'o' && BOARD[1][2] == 'o') || # row 2
+    (BOARD[2][0] == 'o' && BOARD[2][1] == 'o' && BOARD[2][2] == 'o') || # row 3
+    (BOARD[0][0] == 'o' && BOARD[1][0] == 'o' && BOARD[2][0] == 'o') || # column 1
+    (BOARD[0][1] == 'o' && BOARD[1][1] == 'o' && BOARD[2][1] == 'o') || # column 2
+    (BOARD[0][2] == 'o' && BOARD[1][2] == 'o' && BOARD[2][2] == 'o') || # column 3
+    (BOARD[0][0] == 'o' && BOARD[1][1] == 'o' && BOARD[2][2] == 'o') || # top left to bottom right
+    (BOARD[2][0] == 'o' && BOARD[1][1] == 'o' && BOARD[0][2] == 'o')
+    puts "computer wins"
+    break
+  end
 end
