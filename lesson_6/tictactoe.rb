@@ -25,7 +25,7 @@ def computer_turn
     index != nil
   end
   #p computer_options.sample
-  case p computer_options.sample
+  case computer_options.sample
   when 0
     BOARD[0][0] = 'o'
     AVAILABLE_SLOTS[0] = nil
@@ -62,6 +62,10 @@ print_board()
 
 # get user input
 while game_on
+  if (BOARD[0][1] == 'x' && BOARD[0][1] == 'x' && BOARD[0][2] == 'x') || (BOARD[0][0] == 'x' && BOARD[1][4] == 'x' && BOARD[2][7] == 'x')
+    puts "Player wins"
+    break
+  end
 
   if !BOARD[0].include?('-') && !BOARD[1].include?('-') && !BOARD[2].include?('-')
     puts 'AAAAAAANDA IZZA TIE!!!!'
