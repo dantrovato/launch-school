@@ -1,3 +1,11 @@
+INITIAL_MARKER = ' '
+PLAYER_MARKER = 'X'
+COMPUTER_MARKER = 'O'
+
+def prompt(msg)
+  puts "=> #{msg}"
+end
+
 def display_board(brd)
   puts ""
   puts "     |     |     "
@@ -17,10 +25,28 @@ end
 def initialize_board()
   new_board = {}
   (1..9).each do |num|
-    new_board[num] = 'X'
+    new_board[num] = INITIAL_MARKER
   end
   new_board
 end
 
+def empty_squares(brd)
+  brd.keys.select {|num| brd[num] == INITIAL_MARKER}
+end
+
+def player_places_piece!(brd)
+  square = ''
+  loop do
+    prompt("Enter one of the following numbers: #{empty_squares(brd).join(', ')}")
+    square = gets.chomp.to_i
+    break if empty_squares(brd).include?(square)
+    prompt("That's not a valid digit, dude.")
+  end
+  brd[square] = PLAYER_MARKER
+  prompt("NoiSh.")
+end
+
 board = initialize_board()
+display_board(board)
+player_places_piece!(board)
 display_board(board)
