@@ -24,22 +24,53 @@ deck = hearts.merge(clubs).merge(diamonds).merge(spades).to_a.shuffle
 player = []
 dealer = []
 
-player << deck[0] << deck[1]
-dealer << deck[2] << deck[4]
-
 def prompt(msg)
   puts "=> #{msg}"
 end
 
-def player_turn(deck, player)
-  if player[0][1] + player[1][1] > 21
-    prompt("Player is bust")
-    game_on = false
+def deal_initial_hand!(deck, player, dealer)
+  while player.size < 2 && dealer.size < 2
+    player << deck[0]
+    deck.shift
+    dealer << deck[0]
+    deck.shift
   end
 end
 
+
+def calculate_player_total(current_player)
+  # returns player total
+  i = 0
+  total = 0
+  while i < current_player.size
+    total += current_player[i][1]
+    i += 1
+  end
+  total
+end
+
+def player_turn(player)
+
+end
+
+#============================ BEGIN GAME
+
+deal_initial_hand!(deck, player, dealer)
+
 while game_on
-  prompt("Your cards are #{player[0][0]} and #{player[1][0]}. Total worth is #{player[0][1] + player[1][1]}.")
+  prompt("Your cards are #{player[0][0]} and #{player[1][0]}. Total worth is #{calculate_player_total(player)}.")
   prompt("Dealer cards are #{dealer[0][0]} and unknown...#{dealer[0][0]} is worth #{dealer[0][1]}")
+
+  loop do
+    prompt("Do you want to hit or stay?")
+    choice = gets.chomp
+    break if choice == 'stay'
+
+    if choice != 'hit' && choice != 'h'
+      prompt("That's not a valid choice")
+    end
+
+    next
+  end
   game_on = false
 end
