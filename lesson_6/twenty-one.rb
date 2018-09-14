@@ -66,6 +66,19 @@ def update_player_total!(current_player, deck)
   deck.shift
 end
 
+def display_updated_total(current_player)
+  display_received_card(current_player)
+  prompt("Your new total is #{calculate_player_total(current_player)}")
+end
+
+def is_bust?(current_player)
+  if calculate_player_total(current_player) > 21
+    true
+  else
+    false
+  end
+end
+
 #============================ BEGIN GAME
 
 deal_initial_hand!(deck, player, dealer)
@@ -83,10 +96,14 @@ while game_on
       update_player_total!(player, deck)
 
       # check if player not bust
-
+      if is_bust?(player) == true
+          prompt("You're busted! Your total is #{calculate_player_total(player)}")
+          game_on = false
+          break
+      end
       # display player total
-      display_received_card(player)
-      prompt("Your new total is #{calculate_player_total(player)}")
+      display_updated_total(player)
+
     else
       prompt("That's not a valid choice")
       next
