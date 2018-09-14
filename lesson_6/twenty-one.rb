@@ -127,6 +127,9 @@ def determine_winner(player, dealer)
     calculate_player_total(player) > calculate_player_total(dealer)? winner = "Player" : winner = "Dealer"
     prompt("And the winner is...... the #{winner}")
   end
+end
+
+def print_score(player, dealer)
   prompt("Dealer score is #{calculate_player_total(dealer)}")
   prompt("Player score is #{calculate_player_total(player)}")
 end
@@ -143,5 +146,6 @@ while game == 'on'
   #binding.pry
   dealer_turn(dealer, deck, game)
   determine_winner(player, dealer)
+  print_score(player, dealer)
   #game_on = false
 end
