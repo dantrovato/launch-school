@@ -48,10 +48,6 @@ def calculate_player_total(current_player)
   total
 end
 
-def player_turn(player)
-
-end
-
 def display_initial_cards(player, dealer)
   prompt("Your cards are #{player[0][0]} and #{player[1][0]}. Total worth is #{calculate_player_total(player)}.")
   prompt("Dealer cards are #{dealer[0][0]} and unknown...#{dealer[0][0]} is worth #{dealer[0][1]}")
@@ -72,10 +68,37 @@ def display_updated_total(current_player)
 end
 
 def is_bust?(current_player)
-  if calculate_player_total(current_player) > 21
-    true
-  else
-    false
+  calculate_player_total(current_player) > 21
+end
+
+def check_if_bust(current_player)
+
+end
+
+def player_turn(current_player, deck, game_on) # this one's probably a bit too long
+  loop do
+    prompt("Do you want to hit or stay?")
+    choice = gets.chomp
+    break if choice == 'stay' || choice == 's'
+
+    if choice == 'hit' || choice == 'h'
+      # update player arr
+      update_player_total!(current_player, deck)
+
+      # check if player not bust
+      if is_bust?(current_player)
+          prompt("You're busted! Your total is #{calculate_player_total(current_player)}")
+          prompt("Dealer wins")
+          game_on = false
+          break
+      end
+      # display player total
+      display_updated_total(current_player)
+
+    else
+      prompt("That's not a valid choice")
+      next
+    end
   end
 end
 
@@ -85,29 +108,7 @@ deal_initial_hand!(deck, player, dealer)
 
 while game_on
   display_initial_cards(player, dealer)
+  player_turn(player, deck, game_on)
 
-  loop do
-    prompt("Do you want to hit or stay?")
-    choice = gets.chomp
-    break if choice == 'stay' || choice == 's'
-
-    if choice == 'hit' || choice == 'h'
-      # update player arr
-      update_player_total!(player, deck)
-
-      # check if player not bust
-      if is_bust?(player) == true
-          prompt("You're busted! Your total is #{calculate_player_total(player)}")
-          game_on = false
-          break
-      end
-      # display player total
-      display_updated_total(player)
-
-    else
-      prompt("That's not a valid choice")
-      next
-    end
-  end
   game_on = false
 end
