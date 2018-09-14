@@ -37,7 +37,6 @@ def deal_initial_hand!(deck, player, dealer)
   end
 end
 
-
 def calculate_player_total(current_player)
   # returns player total
   i = 0
@@ -53,24 +52,34 @@ def player_turn(player)
 
 end
 
+def display_initial_cards(player, dealer)
+  prompt("Your cards are #{player[0][0]} and #{player[1][0]}. Total worth is #{calculate_player_total(player)}.")
+  prompt("Dealer cards are #{dealer[0][0]} and unknown...#{dealer[0][0]} is worth #{dealer[0][1]}")
+end
+
 #============================ BEGIN GAME
 
 deal_initial_hand!(deck, player, dealer)
 
 while game_on
-  prompt("Your cards are #{player[0][0]} and #{player[1][0]}. Total worth is #{calculate_player_total(player)}.")
-  prompt("Dealer cards are #{dealer[0][0]} and unknown...#{dealer[0][0]} is worth #{dealer[0][1]}")
+  display_initial_cards(player, dealer)
 
   loop do
     prompt("Do you want to hit or stay?")
     choice = gets.chomp
-    break if choice == 'stay'
+    break if choice == 'stay' || choice == 's'
 
-    if choice != 'hit' && choice != 'h'
+    if choice == 'hit' || choice == 'h'
+      # update player arr
+
+      # check if player not bust
+
+      # display player total
+
+    else
       prompt("That's not a valid choice")
+      next
     end
-
-    next
   end
   game_on = false
 end
