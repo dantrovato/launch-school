@@ -57,6 +57,15 @@ def display_initial_cards(player, dealer)
   prompt("Dealer cards are #{dealer[0][0]} and unknown...#{dealer[0][0]} is worth #{dealer[0][1]}")
 end
 
+def display_received_card(current_player)
+  prompt("You turn over this baby: #{current_player.last[0]} worth #{current_player.last[1]}")
+end
+
+def update_player_total!(current_player, deck)
+  current_player << deck[0]
+  deck.shift
+end
+
 #============================ BEGIN GAME
 
 deal_initial_hand!(deck, player, dealer)
@@ -71,11 +80,13 @@ while game_on
 
     if choice == 'hit' || choice == 'h'
       # update player arr
+      update_player_total!(player, deck)
 
       # check if player not bust
 
       # display player total
-
+      display_received_card(player)
+      prompt("Your new total is #{calculate_player_total(player)}")
     else
       prompt("That's not a valid choice")
       next
