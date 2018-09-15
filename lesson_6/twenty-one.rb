@@ -23,7 +23,7 @@ diamonds = {ace_diamonds: 11, two_diamonds: 2, three_diamonds: 3, four_diamonds:
 spades = {ace_spades: 11, two_spades: 2, three_spades: 3, four_spades: 4, five_spades: 5, six_spades: 6, seven_spades: 7, eight_spades: 8,
           nine_spades: 9, ten_spades: 10, jack_spades: 10, queen_spades: 10, king_spades: 10}
 deck = hearts.merge(clubs).merge(diamonds).merge(spades).to_a.shuffle
-
+# p deck = {ace_hearts: 11, two_hearts: 2, three_hearts: 3, ace_clubs: 11, two_clubs: 2, three_clubs: 3, ace_diamonds: 11, two_diamonds: 2, three_diamonds: 3,}.to_a.shuffle
 player = []
 dealer = []
 
@@ -31,6 +31,7 @@ def prompt(msg)
   puts "=> #{msg}"
 end
 
+# ==========================================INITIALIZE GAME
 def deal_initial_hand!(deck, player, dealer)
   while player.size < 2 && dealer.size < 2
     player << deck[0]
@@ -39,55 +40,79 @@ def deal_initial_hand!(deck, player, dealer)
     deck.shift
   end
 end
-
-def calculate_player_total(current_player)
-  # returns player total
-  i = 0
-  total = 0
-  while i < current_player.size
-    total += current_player[i][1]
-    i += 1
-  end
-  total
-end
-
-def handle_ace(current_player)
-  if calculate_player_total(current_player) > 21
-    current_player.each do |card|
-      if card[1] == 11
-        card[1] = 1
-        break
-      end
-    end
-
-  end
-end
-
 def display_initial_cards(player, dealer)
   prompt("Your cards are #{player[0][0]} and #{player[1][0]}. Total worth is #{calculate_player_total(player)}.")
   prompt("Dealer cards are #{dealer[0][0]} and unknown...#{dealer[0][0]} is worth #{dealer[0][1]}")
+end
+# ==========================================INITIALIZE GAME
+
+# ==========================================DISPLAY
+def display_updated_total(current_player)
+  display_received_card(current_player)
+  prompt("Your new total is #{calculate_player_total(current_player)}")
 end
 
 def display_received_card(current_player)
   prompt("You turn over this baby: #{current_player.last[0]} worth #{current_player.last[1]}")
 end
 
-def get_card!(current_player, deck)
-  current_player << deck[0]
-  deck.shift
+def print_score(player, dealer)
+  prompt("Dealer score is #{calculate_player_total(dealer)}")
+  prompt("Player score is #{calculate_player_total(player)}")
+end
+# ==========================================DISPLAY
+
+# ==========================================CALCULATE
+def calculate_player_total(current_player)
+  # returns player total
+  i = 0
+  total = 0
+
+  while i < current_player.size
+    # handle_ace(current_player, total)
+    total += current_player[i][1]
+    i += 1
+  end
+
+  total
 end
 
-def display_updated_total(current_player)
-  display_received_card(current_player)
-  prompt("Your new total is #{calculate_player_total(current_player)}")
+def handle_ace(current_player, total)
+  if total > 21
+    current_player.each do |card|
+      if card[1] == 11
+        card[1] = 1
+        break
+      end
+    end
+  end
 end
 
 def is_bust?(current_player)
   calculate_player_total(current_player) > 21
+  # binding.pry
 end
 
-def check_if_player_is_bust(current_player)
+def determine_winner(player, dealer)
+  winner = ''
+  if !is_bust?(dealer) && !is_bust?(player)
+    if calculate_player_total(player) == calculate_player_total(dealer)
+      prompt("Ladies and gentlemen and horses, we've got a draw!!")
+      winner = "Noone!"
+    elsif calculate_player_total(player) > calculate_player_total(dealer)
+      winner = "Player!"
+    else
+      winner = "Dealer!"
+    end
+    prompt("And the winner is...... the #{winner}")
+  end
+end
+# ==========================================CALCULATE
 
+# ==========================================COMMANDS
+def get_card!(current_player, deck)
+  current_player << deck[0]
+  deck.shift
 end
 
 def player_turn(current_player, deck, game_on, dealer) # this one's probably a bit too long
@@ -135,28 +160,9 @@ def dealer_turn(current_player, deck, game_on)
   end
   game_on << ' off'
 end
+# ==========================================COMMANDS
 
-def determine_winner(player, dealer)
-  winner = ''
-  if !is_bust?(dealer) && !is_bust?(player)
-    if calculate_player_total(player) == calculate_player_total(dealer)
-      prompt("Ladies and gentlemen and horses, we've got a draw!!")
-    elsif calculate_player_total(player) > calculate_player_total(dealer)
-      winner = "Player"
-    else
-      winner = "Dealer"
-    end
-    prompt("And the winner is...... the #{winner}")
-  end
-end
-
-def print_score(player, dealer)
-  prompt("Dealer score is #{calculate_player_total(dealer)}")
-  prompt("Player score is #{calculate_player_total(player)}")
-end
-
-#============================ BEGIN GAME
-
+#===========================================BEGIN GAME
 
 deal_initial_hand!(deck, player, dealer)
 
