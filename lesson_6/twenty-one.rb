@@ -51,6 +51,18 @@ def calculate_player_total(current_player)
   total
 end
 
+def handle_ace(current_player)
+  if calculate_player_total(current_player) > 21
+    current_player.each do |card|
+      if card[1] == 11
+        card[1] = 1
+        break
+      end
+    end
+
+  end
+end
+
 def display_initial_cards(player, dealer)
   prompt("Your cards are #{player[0][0]} and #{player[1][0]}. Total worth is #{calculate_player_total(player)}.")
   prompt("Dealer cards are #{dealer[0][0]} and unknown...#{dealer[0][0]} is worth #{dealer[0][1]}")
@@ -74,11 +86,11 @@ def is_bust?(current_player)
   calculate_player_total(current_player) > 21
 end
 
-def check_if_bust(current_player)
+def check_if_player_is_bust(current_player)
 
 end
 
-def player_turn(current_player, deck, game_on) # this one's probably a bit too long
+def player_turn(current_player, deck, game_on, dealer) # this one's probably a bit too long
   loop do
     prompt("Do you want to hit or stay?")
     choice = gets.chomp
@@ -90,11 +102,14 @@ def player_turn(current_player, deck, game_on) # this one's probably a bit too l
 
       # check if player not bust
       if is_bust?(current_player)
-          prompt("You're busted! Your total is #{calculate_player_total(current_player)}")
-          prompt("Dealer wins")
-          game_on << ' off'
-          #binding.pry
-          break
+        display_received_card(current_player)
+        prompt("You're busted! Your total is #{calculate_player_total(current_player)}")
+        prompt("Dealer total is #{calculate_player_total(dealer)}")
+        prompt("Dealer wins")
+
+        game_on << ' off'
+        #binding.pry
+        break
       end
       # display player total
       display_updated_total(current_player)
@@ -124,7 +139,13 @@ end
 def determine_winner(player, dealer)
   winner = ''
   if !is_bust?(dealer) && !is_bust?(player)
-    calculate_player_total(player) > calculate_player_total(dealer)? winner = "Player" : winner = "Dealer"
+    if calculate_player_total(player) == calculate_player_total(dealer)
+      prompt("Ladies and gentlemen and horses, we've got a draw!!")
+    elsif calculate_player_total(player) > calculate_player_total(dealer)
+      winner = "Player"
+    else
+      winner = "Dealer"
+    end
     prompt("And the winner is...... the #{winner}")
   end
 end
@@ -136,11 +157,13 @@ end
 
 #============================ BEGIN GAME
 
+
 deal_initial_hand!(deck, player, dealer)
 
 while game == 'on'
+  # handle_ace(player)
   display_initial_cards(player, dealer)
-  player_turn(player, deck, game)
+  player_turn(player, deck, game, dealer)
   #binding.pry
   break unless game == 'on'
   #binding.pry
