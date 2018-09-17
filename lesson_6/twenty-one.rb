@@ -22,8 +22,8 @@ diamonds = {ace_diamonds: 11, two_diamonds: 2, three_diamonds: 3, four_diamonds:
           nine_diamonds: 9, ten_diamonds: 10, jack_diamonds: 10, queen_diamonds: 10, king_diamonds: 10}
 spades = {ace_spades: 11, two_spades: 2, three_spades: 3, four_spades: 4, five_spades: 5, six_spades: 6, seven_spades: 7, eight_spades: 8,
           nine_spades: 9, ten_spades: 10, jack_spades: 10, queen_spades: 10, king_spades: 10}
-deck = hearts.merge(clubs).merge(diamonds).merge(spades).to_a.shuffle
-# p deck = {ace_hearts: 11, two_hearts: 2, three_hearts: 3, ace_clubs: 11, two_clubs: 2, three_clubs: 3, ace_diamonds: 11, two_diamonds: 2, three_diamonds: 3,}.to_a.shuffle
+#deck = hearts.merge(clubs).merge(diamonds).merge(spades).to_a.shuffle
+deck = {ace_hearts: 11, two_hearts: 2, three_hearts: 3, ace_clubs: 11, two_clubs: 2, three_clubs: 3, ace_diamonds: 11, two_diamonds: 2, three_diamonds: 3, four_diamonds: 4, five_diamonds: 5, six_diamonds: 6, seven_diamonds: 7, eight_diamonds: 8,}.to_a.shuffle
 player = []
 dealer = []
 
@@ -40,13 +40,14 @@ def deal_initial_hand!(deck, player, dealer)
     deck.shift
   end
 end
+# ==========================================INITIALIZE GAME
+
+# ==========================================DISPLAY
 def display_initial_cards(player, dealer)
   prompt("Your cards are #{player[0][0]} and #{player[1][0]}. Total worth is #{calculate_player_total(player)}.")
   prompt("Dealer cards are #{dealer[0][0]} and unknown...#{dealer[0][0]} is worth #{dealer[0][1]}")
 end
-# ==========================================INITIALIZE GAME
 
-# ==========================================DISPLAY
 def display_updated_total(current_player)
   display_received_card(current_player)
   prompt("Your new total is #{calculate_player_total(current_player)}")
@@ -64,25 +65,30 @@ end
 
 # ==========================================CALCULATE
 def calculate_player_total(current_player)
-  # returns player total
-  i = 0
-  total = 0
-
-  while i < current_player.size
-    # handle_ace(current_player, total)
-    total += current_player[i][1]
-    i += 1
+  # current_player => [[:two_diamonds, 2], [:three_clubs, 3]]
+  nums = []
+  # 1 iterate current_player
+  current_player.each do |card|
+    # 2 collect numbers into new arr
+    nums << card[1]
   end
-
-  total
+  # if over 21 and if there's an ace get into arr and change value of ace
+  handle_ace(nums)
+  # 4 repeat for subsequent aces
+  nums.sum
 end
 
-def handle_ace(current_player, total)
-  if total > 21
-    current_player.each do |card|
-      if card[1] == 11
-        card[1] = 1
-        break
+def handle_ace(nums)
+  if nums.sum > 21 && nums.include?(11)
+    nums[nums.find_index(11)] = 1
+    # 4 repeat for subsequent aces
+    if nums.sum > 21 && nums.include?(11)
+      nums[nums.find_index(11)] = 1
+      if nums.sum > 21 && nums.include?(11)
+        nums[nums.find_index(11)] = 1
+        if nums.sum > 21 && nums.include?(11)
+          nums[nums.find_index(11)] = 1
+        end
       end
     end
   end
@@ -117,6 +123,8 @@ end
 
 def player_turn(current_player, deck, game_on, dealer) # this one's probably a bit too long
   loop do
+    # puts "your numbers are #{current_player}"
+    prompt(current_player)
     prompt("Do you want to hit or stay?")
     choice = gets.chomp
     break if choice == 'stay' || choice == 's'
@@ -169,6 +177,7 @@ deal_initial_hand!(deck, player, dealer)
 while game == 'on'
   # handle_ace(player)
   display_initial_cards(player, dealer)
+
   player_turn(player, deck, game, dealer)
   #binding.pry
   break unless game == 'on'
@@ -176,5 +185,6 @@ while game == 'on'
   dealer_turn(dealer, deck, game)
   determine_winner(player, dealer)
   print_score(player, dealer)
+
   #game_on = false
 end
