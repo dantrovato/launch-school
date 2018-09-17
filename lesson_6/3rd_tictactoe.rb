@@ -1,3 +1,6 @@
+require 'pry'
+require 'pry-byebug'
+
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
@@ -38,13 +41,25 @@ end
 def player_places_piece!(brd)
   square = ''
   loop do
-    prompt("Enter one of the following numbers: #{empty_squares(brd).join(', ')}")
+    prompt("Enter one of the following numbers: #{joinor(empty_squares(brd))}")
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt("That's not a valid digit, dude.")
   end
   brd[square] = PLAYER_MARKER
   prompt("NoiSh.")
+end
+
+def joinor(arr, delimiter= ', ', word= 'or ')
+  case arr.size
+  when 1
+    arr.first
+  when 2
+    "#{arr.first} #{word}#{arr.last}"
+  else
+    arr[-1] = word + arr.last.to_s
+    "#{arr.join(delimiter)}"
+  end
 end
 
 def computer_places_piece!(brd)
@@ -78,31 +93,36 @@ def detect_winner(brd)
   nil
 end
 
-
-
-loop do
-  board = initialize_board()
+while true
+  player_score = 0
+  computer_score = 0
   loop do
+    board = initialize_board()
+
+    loop do
+
+      display_board(board)
+      player_places_piece!(board)
+      break if board_full?(board) || someone_won?(board)
+
+      computer_places_piece!(board)
+      break if board_full?(board) || someone_won?(board)
+    end
 
     display_board(board)
-    player_places_piece!(board)
-    break if board_full?(board) || someone_won?(board)
 
-    computer_places_piece!(board)
-    break if board_full?(board) || someone_won?(board)
+    if someone_won?(board)
+      if detect_winner(board) == 'Player'
+        player_score += 1
+      elsif detect_winner(board) == 'Computer'
+        computer_score += 1
+      end
+      prompt("#{detect_winner(board)} won!")
+    else
+      prompt("It's a tie!")
+    end
+    break if player_score == 2 || computer_score == 2
   end
-
-  display_board(board)
-
-  if someone_won?(board)
-    prompt("#{detect_winner(board)} won!")
-  else
-    prompt("It's a tie!")
-  end
-
-  prompt('Play again? Type yes or no')
-  play_again = gets.chomp
-  break if play_again == 'no'
+  break
 end
-
-prompt("Orite then. Be like that.")
+prompt("BYYYYEEEEE.")
