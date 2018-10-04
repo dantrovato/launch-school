@@ -12,34 +12,31 @@
 # string_to_signed_integer('4321') == 4321
 # string_to_signed_integer('-570') == -570
 # string_to_signed_integer('+100') == 100
+require 'pry'
+require 'pry-byebug'
+system 'clear'
 
-DIGITS = {
-  '0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4,
-  '5' => 5, '6' => 6, '7' => 7, '8' => 8, '9' => 9
-}
 
-def string_to_integer(str)
-  # string = DIGITS value
-  digit_arr = str.chars.map do |chr|
-    DIGITS[chr]
+DIGITS = {'0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8, '9' => 9}
+
+def string_to_signed_integer(str)
+  case str[0]
+  when '-' then -string_to_integer(str[1..-1])
+  when '+' then string_to_integer(str[1..-1])
+  else          string_to_integer(str)
   end
+end
+
+def string_to_integer(str) # '4321'
+  # str.chars => ['4', '3', '2', '1']
+  digits_arr = str.chars.map { |chr| DIGITS[chr] } # => [1, 2, 3, 4]
   value = 0
-  digit_arr.each do |chr|
-    value = 10 * value + chr
+  digits_arr.each do |num|
+    value = value * 10 + num
   end
   value
 end
 
-def string_to_signed_integer(str)
-  if str[0] == '-'
-    - string_to_integer(str[1..-1])
-  elsif str[0] == '+'
-    + string_to_integer(str[1..-1])
-  else
-    string_to_integer(str)
-  end
-end
-
-p string_to_signed_integer('+99') == 99
-p string_to_signed_integer('-4321') == -4321
-p string_to_signed_integer('570') == 570
+p string_to_signed_integer('4321') == 4321
+p string_to_signed_integer('-570') == -570
+p string_to_signed_integer('+100') == 100
