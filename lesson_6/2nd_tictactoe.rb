@@ -48,10 +48,12 @@ end
 
 def joinor(arr, delimiter=', ', word='or')
   case arr.size
-  when 1 then arr.first
-  when 2 then "#{arr.first} #{word} #{arr.last}"
+  when 1
+    arr.first
+  when 2
+    "#{arr.first} #{word} #{arr.last}"
   else
-    arr[-1] = "#{word} #{arr.last}"
+    arr[-1] = "#{word} #{arr[-1]}"
     arr.join(delimiter)
   end
 end

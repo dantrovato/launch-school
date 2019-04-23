@@ -22,14 +22,40 @@ require 'pry-byebug'
 DIGITS = {'0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8, '9' => 9}
 
 def string_to_integer(str) # '4321'
-  # str.chars => ['4', '3', '2', '1']
-  digits_arr = str.chars.map { |chr| DIGITS[chr] } # => [1, 2, 3, 4]
+  # create a value = 0
   value = 0
-  digits_arr.each do |num|
-    value = value * 10 + num
+  # iterate over string
+  str.each_char do |num| # ['4', '3', '2', '1']
+    value = value * 10 + DIGITS[num]
   end
   value
 end
 
 p string_to_integer('4321') == 4321
 p string_to_integer('570') == 570
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=begin
+# str.chars => ['4', '3', '2', '1']
+digits_arr = str.chars.map { |chr| DIGITS[chr] } # => [1, 2, 3, 4]
+value = 0
+digits_arr.each do |num|
+  value = value * 10 + num
+end
+value
+=end
