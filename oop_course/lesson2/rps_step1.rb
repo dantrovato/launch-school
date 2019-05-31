@@ -1,15 +1,24 @@
 CHOICES = %w(rock paper scissors)
 
 class Player
+  attr_accessor :move
+
   def initialize(player_type = :human)
     @player_type = player_type
+    @move = nil
   end
 
   def choice
     if human?
-      puts 'fava'
+      choice = nil
+      loop do
+        puts "Choose between rock paper or scissors"
+        choice = gets.chomp
+        break if %w(rock paper scissors).include?(choice)
+      end
+      self.move = choice
     else
-      p CHOICES.sample
+      self.move = CHOICES.sample
     end
   end
 
