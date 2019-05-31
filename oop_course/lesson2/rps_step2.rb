@@ -1,4 +1,4 @@
-# DISPLAY WINNER
+# DISPLAY WINNER!
 CHOICES = %w(rock paper scissors)
 
 class Player
