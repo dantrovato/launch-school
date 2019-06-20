@@ -29,20 +29,20 @@ class Participant
   end
 
   def total
-    self.calculate_total(self.values)
+    calculate_total(values)
   end
 
   def hit
     # binding.pry
-    cards_held << deck.get_card
+    cards_held << deck.deal_card
     puts "your cards now are now #{cards_held} worth #{total} "
   end
 
   def values
-     cards_held.map { |card| card[1] } # => ex. ["ace", "7"]
+    cards_held.map { |card| card[1] } # => ex. ["ace", "7"]
   end
 
-  def is_bust?
+  def bust?
     total > 21
   end
 end
@@ -78,11 +78,10 @@ class Player < Participant
 end
 
 class Dealer < Participant
-
   def move
     loop do
       if total < 17
-        cards_held << deck.get_card
+        cards_held << deck.deal_card
       end
       break if total >= 17
     end
@@ -102,10 +101,9 @@ class Deck
 
   def initialize
     @cards = SUITS.product(VALUES).shuffle
-
   end
 
-  def get_card
+  def deal_card
     cards.shift
   end
 
@@ -133,21 +131,22 @@ class Game
 
   def deal_cards
     2.times do
-      player.cards_held << deck.get_card
-      dealer.cards_held << deck.get_card
+      player.cards_held << deck.deal_card
+      dealer.cards_held << deck.deal_card
     end
   end
 
   def display_cards
-    puts "Your cards are #{player.cards_held}, for a total of: #{player.total}" # => ex. [["diamonds", "3"], ["hearts", "6"]]
-    # binding.pry
-    puts "Dealer cards are #{dealer.cards_held[0]}, worth #{dealer.calculate_total(dealer.initial_total)} and ??"
+    puts "Your cards are #{player.cards_held}, for a total of: #{player.total}"
+    # => ex. [["diamonds", "3"], ["hearts", "6"]]
+    puts "Dealer cards are #{dealer.cards_held[0]},
+    worth #{dealer.calculate_total(dealer.initial_total)} and ??"
   end
 
   def declare_winner
-    if player.is_bust?
+    if player.bust?
       puts "You busted. Dealer wins."
-    elsif dealer.is_bust?
+    elsif dealer.bust?
       puts "Dealer busted. Player wins."
     elsif player.total > dealer.total
       puts "Player wins."
